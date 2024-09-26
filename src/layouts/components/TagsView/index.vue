@@ -31,7 +31,8 @@ let affixTags: TagView[] = []
 
 /** 判断标签页是否激活 */
 const isActive = (tag: TagView) => {
-  return tag.path === route.path
+  // @ts-ignore
+  return tag.path === route.path || tag.meta.parent === route.meta.parent
 }
 
 /** 判断标签页是否固定 */
@@ -157,7 +158,9 @@ onMounted(() => {
   initTags()
   /** 监听路由变化 */
   listenerRouteChange(async (route) => {
-    addTags(route)
+    if (!route.meta.notAddTab) {
+      addTags(route)
+    }
   }, true)
 })
 </script>

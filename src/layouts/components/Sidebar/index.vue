@@ -28,7 +28,9 @@ const activeMenu = computed(() => {
   } = route
   return activeMenu ? activeMenu : path
 })
-const noHiddenRoutes = computed(() => permissionStore.routes.filter((item) => !item.meta?.hidden))
+const noHiddenRoutes = computed(() => {
+  return permissionStore.routes.filter((item) => !item.meta?.hidden)
+})
 const isCollapse = computed(() => !appStore.sidebar.opened)
 const isLogo = computed(() => isLeft.value && settingsStore.showLogo)
 const backgroundColor = computed(() => (isLeft.value ? v3SidebarMenuBgColor : undefined))

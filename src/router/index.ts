@@ -62,6 +62,63 @@ export const constantRoutes: RouteRecordRaw[] = [
     ]
   },
   {
+    path: "/user",
+    component: Layouts,
+    redirect: "/user/index",
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/user/index.vue"),
+        name: "user",
+        meta: {
+          title: "用户",
+          svgIcon: "user",
+          parent: "user"
+        }
+      },
+      {
+        path: "create",
+        component: () => import("@/views/user/create/index.vue"),
+        name: "createUser",
+        meta: {
+          title: "创建用户",
+          notAddTab: true,
+          hidden: true,
+          parent: "user"
+        }
+      }
+    ]
+  },
+  {
+    path: "/demand",
+    component: Layouts,
+    redirect: "/demand/index",
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/demand/index.vue"),
+        name: "demand",
+        meta: {
+          title: "需求管理",
+          svgIcon: "user",
+          parent: "demand",
+          affix: true
+        }
+      },
+      {
+        path: "create",
+        component: () => import("@/views/demand/create/index.vue"),
+        name: "createDemand",
+        meta: {
+          title: "创建需求",
+          notAddTab: true,
+          hidden: true,
+          parent: "demand"
+        }
+      }
+    ]
+  },
+  {
     path: "/unocss",
     component: Layouts,
     redirect: "/unocss/index",
