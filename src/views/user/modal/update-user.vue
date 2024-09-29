@@ -1,5 +1,9 @@
 <template>
   <el-dialog v-model="visible" title="编辑用户">
+    <div v-if="errMessage" mb-2>
+      <el-alert :title="errMessage" type="error" :closable="false" />
+    </div>
+
     <el-form ref="ruleFormRef" :rules="rules" :model="formValues" label-width="120px" status-icon>
       <el-form-item label="名称" placeholder="请输入名称" prop="name">
         <el-input v-model="formValues.name" />
@@ -71,6 +75,8 @@ const formValues: FormType = reactive({
   responsibility: props?.record?.responsibility || "TEAM_MEMBER"
 })
 
+const errMessage = ref("")
+
 onMounted(() => {
   getDepartments()
 })
@@ -89,13 +95,15 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
     if (valid) {
       axios
         .post("/api-yunmo/users", formValues, { withCredentials: true })
-        .then((res) => {
-          console.log("success:", res)
+        .then((_res) => {
+          // console.log("success:", res)
           emit("onClose")
           emit("onComplate")
         })
         .catch((err) => {
-          console.log("err:", err)
+          // console.log("err:", err)
+          const message = err?.response?.data?.errors?.[0]?.message || ""
+          errMessage.value = message
         })
     } else {
       console.log("error submit!", fields)
